@@ -10,27 +10,27 @@ package observer;
  * @see Observer
  * @see ReservationObservable
  */
-public class Cliente implements Observer {
-    private String nombre;
+public class Client implements Observer {
+    private String name;
     private String dui;
 
     /**
      * Constructor que inicializa el cliente con su nombre y DUI.
      *
-     * @param nombre Nombre del cliente.
+     * @param name Nombre del cliente.
      * @param dui Número de DUI del cliente.
      */
-    public Cliente(String nombre, String dui){
-        this.nombre = nombre;
+    public Client(String name, String dui){
+        this.name = name;
         this.dui = dui;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDui() {
@@ -45,10 +45,10 @@ public class Cliente implements Observer {
      * Método que se ejecuta cuando el Observable notifica un cambio de estado.
      * Muestra un mensaje personalizado al cliente.
      *
-     * @param estado Nuevo estado de la reserva.
+     * @param state Nuevo estado de la reserva.
      */
     @Override
-    public void update(String estado) {
-        System.out.println("Hola " + nombre + ", el estado de su reserva ha cambiado a: " + estado);
+    public void update(String state) {
+        System.out.println("Hola " + name + ", el estado de su reserva ha cambiado a: " + state);
     }
 }
