@@ -38,7 +38,7 @@ public class ReservationFields {
 
             // válida el formato con regex
             if (!date.matches("\\d{4}-\\d{2}-\\d{2}")){
-                System.out.println("Fomato invalido. Use el formato YYYY-MM-DD");
+                System.out.println("Formato invalido. Use el formato YYYY-MM-DD");
                 continue;
             }
 
@@ -60,11 +60,11 @@ public class ReservationFields {
         String cardNumber;
 
         while (true){
-            System.out.println("Ingrese el numero de la targeta (16 digitos sin espacios): ");
+            System.out.println("Ingrese el numero de la tarjeta (16 digitos sin espacios): ");
             cardNumber = scanner.nextLine();
 
             if (!cardNumber.matches("\\d{16}")){
-                System.out.println("Numero invalido. Asegurese de ingresar 16 digitos");
+                System.out.println("Numero invalido. Asegúrese de ingresar 16 digitos");
             } else {
                 return cardNumber;
             }

@@ -1,7 +1,16 @@
 package data;
 
+
+/**
+ * Clase que centraliza los datos de reservas disponibles para hoteles, vuelos y vehículos.
+ * Permite mantener separados el nombre, precio y otras propiedades de cada tipo de reserva,
+ * facilitando la extensión y el mantenimiento de los adapters sin modificar su lógica.
+ */
 public class ReservationData {
 
+    /**
+     * Representa un hotel disponible para reservar.
+     */
     public static class Hotel {
         public String name;
         public int stars;
@@ -19,6 +28,9 @@ public class ReservationData {
         }
     }
 
+    /**
+     * Representa un vuelo disponible para reservar.
+     */
     public static class Flight {
         public String destination;
         public int price;
@@ -34,6 +46,9 @@ public class ReservationData {
         }
     }
 
+    /**
+     * Representa un vehículo disponible para reservar.
+     */
     public static class Car {
         public String type;
         public int price;
@@ -49,19 +64,22 @@ public class ReservationData {
         }
     }
 
-    // Datos de ejemplo
+
+    /** Lista de hoteles disponibles */
     public static Hotel[] hotels = {
             new Hotel("El Marito", 4, 150),
             new Hotel("El Canopi", 4, 300),
             new Hotel("El Luxor", 5, 450)
     };
 
+    /** Lista de vuelos disponibles */
     public static Flight[] flights = {
             new Flight("Madrid", 100),
             new Flight("Londres", 200),
             new Flight("Miami", 300)
     };
 
+    /** Lista de vehículos disponibles */
     public static Car[] cars = {
             new Car("Familiar 4 puertas", 75),
             new Car("2 Puertas", 150),
