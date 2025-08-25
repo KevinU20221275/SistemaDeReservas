@@ -57,19 +57,25 @@ public class Main {
                     ReservationFactory factory = GetFactoryReservation.getFactoryReservation(reservationOption);
                     Reservation service = factory.createReservation();
 
-                    // Adapter - Pide los datos adicionales
-                    ReservationInputAdapter adapter = null;
-                    switch (reservationOption){
-                        case 1 -> adapter = new HotelReservationAdapter(); // clases intermedias que piden información según el tipo de reserva
-                        case 2 -> adapter = new FlightReservationAdapter();
-                        case 3 -> adapter = new CarReservationAdapter();
-                    }
+                    /**
+                     *  Uso de Adapter + Factory para configurar la reserva.
+                     *
+                     * Dependiendo de la opción seleccionada por el usuario, se obtiene un adaptador específico
+                     * mediante {@link ReservationAdapterFactory#createAdapter(int)} y se configura la reserva
+                     * llamando a {@link ReservationInputAdapter#configureReservation(java.util.Scanner, Reservation)}.
+                     */
+                    try {
+                        // Obtener el adaptador correcto según la opción
+                        ReservationInputAdapter adapter = ReservationAdapterFactory.createdAdapter(reservationOption);
 
-                    if (adapter != null){
+                        // Configurar la reserva usando el adaptador
                         adapter.configureReservation(scanner, service);
+                    } catch (IllegalArgumentException e){
+                        // Mensaje claro si la opción no es válida
+                        System.out.println(e.getMessage());
                     }
-
-                    // Observer - crea un cliente y suscribe a notificaciones de cambios en la reserva
+                    
+                    // Observer - crea un cliente y subscribe a notificaciones de cambios en la reserva
                     ReservationObservable observable = new ReservationObservable();
                     // solicita los datos del cliente (Nombre, Dui)
                     String clientName = ReservationFields.getName(scanner);
