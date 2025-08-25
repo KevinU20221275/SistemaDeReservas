@@ -1,16 +1,17 @@
 package adapter;
 
+import data.ReservationData;
+import data.ReservationData.Hotel;
 import reservations.Reservation;
 import ui.Menu;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 /**
  * Adaptador para configurar reservas de Hotel.
  */
 public class HotelReservationAdapter implements ReservationInputAdapter{
-    private String[] hotelList = {"El Marito, 4 Estrellas, $150", "El canopi, 4 Estrellas, $300", "El luxor, 5 Estrellas, $450"};
+    private Hotel[] hotelList = ReservationData.hotels;
 
     @Override
     public void configureReservation(Scanner scanner, Reservation reservation) {
@@ -21,12 +22,13 @@ public class HotelReservationAdapter implements ReservationInputAdapter{
 
         System.out.print("Seleccione su hotel: ");
         int hotelOption = Menu.getValidatedOption(scanner, 1, hotelList.length); // válida la entrada del usuario
+        Hotel selectedHotel = hotelList[hotelOption - 1];
 
-        reservation.setPrice(hotelOption * 150);
+        reservation.setPrice(selectedHotel.price);
 
         if (reservation instanceof reservations.HotelReservation hotelReservation) {
             int randomRoom = (int) (Math.random() * 200) + 1;
-            hotelReservation.setHotelName(this.hotelList[hotelOption - 1]);
+            hotelReservation.setHotelName(selectedHotel.name);
             hotelReservation.setRoom("HC" + randomRoom);
         }
     }

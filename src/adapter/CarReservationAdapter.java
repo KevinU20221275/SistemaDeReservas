@@ -1,16 +1,17 @@
 package adapter;
 
+import data.ReservationData;
+import data.ReservationData.Car;
 import reservations.Reservation;
 import ui.Menu;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 /**
  * Adaptador para configurar reservas de vehículos.
  */
 public class CarReservationAdapter implements ReservationInputAdapter {
-    private String[] carsList = {"Familiar 4 puertas, $75", "2 Puertas, $150", "Camioneta todo Terreno, $225"};
+    private Car[] carsList = ReservationData.cars;
 
     @Override
     public void configureReservation(Scanner scanner, Reservation reservation) {
@@ -21,11 +22,12 @@ public class CarReservationAdapter implements ReservationInputAdapter {
 
         System.out.print("Seleccione su vehiculo: ");
         int carOption = Menu.getValidatedOption(scanner, 1, carsList.length);
+        Car selectedCar = carsList[carOption - 1];
 
-        reservation.setPrice(carOption * 75);
+        reservation.setPrice(selectedCar.price);
 
         if (reservation instanceof reservations.CarReservation carReservation) {
-            carReservation.setCarType(this.carsList[carOption - 1]);
+            carReservation.setCarType(selectedCar.type);
         }
     }
 }

@@ -1,16 +1,17 @@
 package adapter;
 
+import data.ReservationData;
+import data.ReservationData.Flight;
 import reservations.Reservation;
 import ui.Menu;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 /**
  * Adaptador para configurar reservas de Vuelo.
  */
 public class FlightReservationAdapter implements ReservationInputAdapter {
-    private String[] flightList = {"Madrid, $100", "Londres, $200", "Miami, $300"};
+    private Flight[] flightList = ReservationData.flights;
 
     @Override
     public void configureReservation(Scanner scanner, Reservation reservation) {
@@ -21,8 +22,9 @@ public class FlightReservationAdapter implements ReservationInputAdapter {
 
         System.out.print("Seleccione su vuelo: ");
         int flightOption = Menu.getValidatedOption(scanner, 1, flightList.length);
+        Flight selectedFlight = flightList[flightOption - 1];
 
-        reservation.setPrice(flightOption * 100);
+        reservation.setPrice(selectedFlight.price);
 
         if (reservation instanceof reservations.FlightReservation flightReservation) {
             int flightNumber = (int) (Math.random() * 1000) + 1;
@@ -32,7 +34,7 @@ public class FlightReservationAdapter implements ReservationInputAdapter {
 
             int randomSeat = (int) (Math.random() * 60) + 1;
             flightReservation.setFlightNumber("V" + flightNumber);
-            flightReservation.setFlightDestination(this.flightList[flightOption - 1]);
+            flightReservation.setFlightDestination(selectedFlight.destination);
             flightReservation.setSeat(windowSeat.equalsIgnoreCase("s") ? "A" + randomSeat : "C" + randomSeat);
         }
     }
