@@ -44,7 +44,7 @@ public class Main {
 
         while (mainOption != 3) {
             try {
-                // muestra el menu principal y obtener opcion seleccionada
+                // muestra el menu principal y obtener opción seleccionada
                 Menu.mainMenu();
                 mainOption = Menu.getValidatedOption(scanner, 1, 3);
 
@@ -53,7 +53,7 @@ public class Main {
                     Menu.reservationMenu();
                     int reservationOption = Menu.getValidatedOption(scanner, 1, 3);
 
-                    // Factory - crea una intancia del tipo de reserva seleccionado
+                    // Factory - crea una instancia del tipo de reserva seleccionado
                     ReservationFactory factory = GetFactoryReservation.getFactoryReservation(reservationOption);
                     Reservation service = factory.createReservation();
 
@@ -74,24 +74,27 @@ public class Main {
                         // Mensaje claro si la opción no es válida
                         System.out.println(e.getMessage());
                     }
-                    
+
                     // Observer - crea un cliente y subscribe a notificaciones de cambios en la reserva
                     ReservationObservable observable = new ReservationObservable();
+
                     // solicita los datos del cliente (Nombre, Dui)
                     String clientName = ReservationFields.getName(scanner);
                     String dui  = ReservationFields.getDui(scanner);
                     Client cliente = new Client(clientName, dui); // crea el cliente
+
                     observable.addObserver(cliente); // agrega el cliente al observer
+
                     // solicita la fecha
                     String reservationDate = ReservationFields.getDate(scanner);
 
-                    // Decoratos - agrega servicios adicionales (Seguro, Spa)
+                    // Decorators - agrega servicios adicionales (Seguro, Spa)
                     // clase intermedia para agregar extras al servicio
                     AddExtraServices addExtraService = new AddExtraServices(service);
                     // pregunta si desea agregar seguro
                     service = addExtraService.addInsurance(scanner);
                     if (reservationOption == 1){
-                        // pregunta si desea agregar acceso al spa (opcion 1 es por reserva de hotel)
+                        // pregunta si desea agregar acceso al spa (opción 1 es por reserva de hotel)
                         service = addExtraService.addSpaAccess(scanner);
                     }
 
@@ -100,7 +103,7 @@ public class Main {
                         service = addExtraService.addBreakfast(scanner); // aplica para Hotel y vuelo
                     }
 
-                    // Strategy - Seleccionar el metodo de pago(Taregeta o Paypa)
+                    // Strategy - Seleccionar el método de pago(Tarjeta o Paypal)
                     Menu.paidMethodMenu();
                     int pagoOpcion = Menu.getValidatedOption(scanner, 1, 2);
                     PagoStrategy paidMethod = GetPagoStrategy.getPagoStrategy(pagoOpcion, scanner);
@@ -115,12 +118,12 @@ public class Main {
                     // Singleton - Almacena la reserva en la lista centralizada
                     system.addReservartion(finalReservation);
 
-                    // Facade + Command - Ejecuta el flujo completo de reserva atraves de comandos
-                    /**
-                     * Facade construira finalmente la reserva, pero se pasa como dependecia al constructor
-                     * de command para implementar los 2 patrones, por dentro command ejecutara el metodo makeReservation()
-                     * del facade para procesar el pago y la constrccion de la reserva.
-                    * */
+                    // Facade + Command - Ejecuta el flujo completo de reserva a través de comandos
+                    /*
+                     * Facade construirá finalmente la reserva, pero se pasa como dependencia al constructor
+                     * de command para implementar los 2 patrones, por dentro command ejecutara el método makeReservation()
+                     * del facade para procesar el pago y la construcción de la reserva.
+                    */
                     ReservationFacade facade = new ReservationFacade(finalReservation, paidMethod);
 
                     // Command
@@ -128,7 +131,7 @@ public class Main {
                     Invoker invoker = new Invoker();
                     invoker.setCommand(command);
                     // por dentro ejecuta makeReservation() del facade
-                    invoker.executeReservation(); // crea finalmente la reservacion
+                    invoker.executeReservation(); // crea finalmente la reservación
 
                     // Observer - Notifica al cliente el estado de su reserva.
                     System.out.println();
