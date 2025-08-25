@@ -90,7 +90,7 @@ public abstract class ReservationAbstract implements Reservation {
      */
     @Override
     public void showDetails() {
-        System.out.println("===== DOTOS DE LA RESERVA =====");
+        System.out.println("===== DATOS DE LA RESERVA =====");
         System.out.println("Reserva de " + type);
         System.out.println("Estado: " + state);
         System.out.println("Cliente: " + clientName);
