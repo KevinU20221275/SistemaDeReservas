@@ -88,20 +88,16 @@ public class Main {
                     // solicita la fecha
                     String reservationDate = ReservationFields.getDate(scanner);
 
-                    // Decorators - agrega servicios adicionales (Seguro, Spa)
-                    // clase intermedia para agregar extras al servicio
-                    AddExtraServices addExtraService = new AddExtraServices(service);
-                    // pregunta si desea agregar seguro
-                    service = addExtraService.addInsurance(scanner);
-                    if (reservationOption == 1){
-                        // pregunta si desea agregar acceso al spa (opción 1 es por reserva de hotel)
-                        service = addExtraService.addSpaAccess(scanner);
-                    }
-
-                    if (reservationOption != 3){
-                        // pregunta si quiere agregar desayuno
-                        service = addExtraService.addBreakfast(scanner); // aplica para Hotel y vuelo
-                    }
+                    /**
+                     * Decorators - Aplica los servicios adicionales a la reserva seleccionada por el usuario.
+                     *
+                     * Se utiliza la clase {@link AddExtraServices} para encapsular toda la lógica de
+                     * preguntar al usuario por servicios extra y aplicar los decoradores correspondientes.
+                     * Esto incluye seguro, acceso al spa (solo para hoteles) y desayuno (para hotel y vuelo).
+                     *
+                     */
+                    AddExtraServices extraServices = new AddExtraServices(service);
+                    service = extraServices.applyAllExtras(scanner, reservationOption);
 
                     // Strategy - Seleccionar el método de pago(Tarjeta o Paypal)
                     Menu.paidMethodMenu();

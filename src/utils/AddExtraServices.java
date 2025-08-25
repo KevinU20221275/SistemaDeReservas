@@ -76,4 +76,31 @@ public class AddExtraServices {
 
         return service;
     }
+
+    /**
+     * Aplica todos los servicios extra disponibles a la reserva según el tipo de reserva.
+     *
+     * Pregunta al usuario por seguro, spa (solo hotel) y desayuno (hotel y vuelo),
+     * aplicando los decoradores correspondientes.
+     *
+     * @param scanner Scanner para la entrada del usuario
+     * @param reservationOption Tipo de reserva: 1-Hotel, 2-Vuelo, 3-Auto
+     * @return La reserva con los servicios extra aplicados
+     */
+    public Reservation applyAllExtras(Scanner scanner, int reservationOption) {
+        // Seguro siempre
+        service = addInsurance(scanner);
+
+        // Spa solo para hotel
+        if (reservationOption == 1) {
+            service = addSpaAccess(scanner);
+        }
+
+        // Desayuno para hotel y vuelo
+        if (reservationOption != 3) {
+            service = addBreakfast(scanner);
+        }
+
+        return service;
+    }
 }
